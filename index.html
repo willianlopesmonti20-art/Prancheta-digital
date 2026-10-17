@@ -116,6 +116,22 @@ body{
   .big .txt{display:none}
   .seg .btn .txt{display:none}
 }
+/* Celular deitado: barra vira coluna na lateral para a quadra ganhar altura */
+@media (orientation:landscape) and (max-height:560px){
+  .app{flex-direction:row}
+  .bar{
+    grid-template-columns:none;grid-template-rows:auto minmax(0,1fr) auto;justify-items:center;
+    gap:10px;padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:8px;padding-block:8px;
+    border-bottom:0;border-right:1px solid var(--rule);
+  }
+  .center{flex-direction:column;flex-wrap:nowrap;gap:8px}
+  .seg{flex-direction:column}
+  .seg .btn + .btn{border-left:0;border-top:1px solid var(--rule)}
+  .group{flex-direction:column;flex-wrap:nowrap}
+  .big{min-height:56px;min-width:56px;padding:0 10px}
+  .big .txt,.seg .btn .txt{display:none}
+  .fit{inset:6px max(6px,env(safe-area-inset-right,0px)) 6px 6px}
+}
 @media (prefers-reduced-motion:reduce){ .toast{transition:none} }
 </style>
 </head>
@@ -356,6 +372,8 @@ body{
     var ch=5.4*kr, cw=ch*0.902, c=toScreen(20,10);
     crestEl.style.width=cw+'px'; crestEl.style.height=ch+'px';
     crestEl.style.left=(c[0]-cw/2)+'px'; crestEl.style.top=(c[1]-ch/2)+'px';
+    // em pé, o escudo gira junto com a quadra: a base fica virada para o banco de reservas
+    crestEl.style.transform=portrait?'rotate(90deg)':'none';
     dpr=Math.min(3,window.devicePixelRatio||1);
     cv.width=off.width=Math.round(W*dpr); cv.height=off.height=Math.round(H*dpr);
     renderInk();
